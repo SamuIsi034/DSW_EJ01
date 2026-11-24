@@ -18,6 +18,20 @@ public class PersonajeService : IPersonajeService
         return _repository.ObtenerTodos();
     }
 
+    public List<Personaje> ObtenerPorVideojuego(string nombre)
+    {
+        return _repository.ObtenerTodos()
+            .Where(p => p.Videojuego.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    public List<Personaje> ObtenerPorNivel(int nivel)
+    {
+        return _repository.ObtenerTodos()
+            .Where(p => p.Nivel >= nivel)
+            .ToList();
+    }
+
     public Personaje? ObtenerPorId(int id)
     {
         return _repository.ObtenerPorId(id);
@@ -26,6 +40,7 @@ public class PersonajeService : IPersonajeService
     public Personaje Agregar(Personaje nuevoPersonaje)
     {
         ValidarPersonaje(nuevoPersonaje);
+        nuevoPersonaje.Disponible = true;
 
         return _repository.Agregar(nuevoPersonaje);
     }
@@ -67,6 +82,27 @@ public class PersonajeService : IPersonajeService
         if (string.IsNullOrWhiteSpace(personaje.Clase))
         {
             throw new ArgumentException("La clase del personaje es obligatoria.");
+        }
+        if (string.IsNullOrWhiteSpace(personaje.Videojuego))
+        {
+            throw new ArgumentException("El videojuego del personaje es obligatorio.");
+        }
+
+        if (personaje.Nivel < 1 || personaje.Nivel > 100)
+        {
+            throw new ArgumentException("El nivel debe estar entre 1 y 100.");
+        }
+
+        if (personaje.Poder <= 0)
+        {
+            throw new ArgumentException("El poder debe ser mayor que cero.");
+        }
+
+        if (string.IsNullOrWhiteSpace(personaje.ImagenUrl) ||
+        !Uri.TryCreate(personaje.ImagenUrl, UriKind.Absolute, out var uri) ||
+        (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+        {
+            throw new ArgumentException("ImagenUrl debe ser una URL absoluta válida (HTTP o HTTPS).");
         }
     }
 }

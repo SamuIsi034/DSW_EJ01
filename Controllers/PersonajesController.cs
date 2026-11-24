@@ -35,6 +35,19 @@ public class PersonajesController : ControllerBase
 
         return Ok(personaje);
     }
+    [HttpGet("videojuego/{nombre}")]
+    public ActionResult<List<Personaje>> ObtenerPorVideojuego(string nombre)
+    {
+        var personajes = _service.ObtenerPorVideojuego(nombre);
+        return Ok(personajes);
+    }
+
+    [HttpGet("nivel/{nivel:int}")]
+    public ActionResult<List<Personaje>> ObtenerPorNivel(int nivel)
+    {
+        var personajes = _service.ObtenerPorNivel(nivel);
+        return Ok(personajes);
+    }
 
     [HttpPost]
     public ActionResult<Personaje> Agregar([FromBody] Personaje personaje)
