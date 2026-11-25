@@ -36,7 +36,21 @@ namespace DSW_3P_EJ01.Migrations
                     b.Property<bool>("Disponible")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ImagenUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Nivel")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Poder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Videojuego")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
