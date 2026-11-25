@@ -46,7 +46,7 @@ builder.Services
            };
    });
 
-/*Configurar política de CORS
+//Configurar política de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("QuestLogFrontend", policy =>
@@ -59,7 +59,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-*/
+
 
 builder.Services.AddAuthorization();
 
